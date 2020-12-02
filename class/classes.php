@@ -250,6 +250,11 @@ class ride{
 			$query = "INSERT INTO `tbl_ride`( `ride_date`, `from`, `to`, `total_distance`, `luggage`, `total_fare`, `status`, `customer_user_id`) VALUES (now()".",'".$_SESSION['from']."','".$_SESSION['to']."','".$_SESSION['total_distance']."','".$_SESSION['luggage']."','".$_SESSION['total_price']."','1','".$_SESSION['user_id']."')";
 			$stmt = $db->prepare($query);
 			$stmt->execute();
+			unset($_SESSION['from']);
+			unset($_SESSION['to']);
+			unset($_SESSION['total_distance']);
+			unset($_SESSION['luggage']);
+			unset($_SESSION['total_price']);
 			echo "Success,waiting for admin to approve,Check ride section";
 			return;}
 			else{
@@ -375,7 +380,7 @@ class ride{
 			$query = "INSERT INTO `tbl_location`(`name`, `distance`, `is_available`) VALUES ('".$name."','".$dist."','1')";
 			$stmt = $db->prepare($query);
 			$stmt->execute();
-			return "Location Added";
+			header("location:../admin/addLocation.php");
 		}
 		function updateLoc($id,$name,$dist,$db){
 			$query = "UPDATE `tbl_location` SET `name`='".$name."',`distance`='".$dist."' WHERE `id`=".$id;

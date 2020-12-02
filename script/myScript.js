@@ -62,7 +62,7 @@ function validate(){
                 type:"POST",
                 url:"./ajax/ajax2.php",
                 success: function(response) {
-                        alert(response);
+                    alert(response);
                 }
             });
            } 
@@ -72,6 +72,16 @@ function validate(){
           }
       }
   });
+}
+function myRide(){
+   $.ajax({     
+    type:"POST",
+    url:"./ajax/ajax2.php",
+    success: function(response) {
+        location.reload();
+        alert(response);
+    }
+});
 }
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
@@ -91,7 +101,14 @@ window.onclick = function(event) {
 }
 }
 }
-
+function deleteRide1(){
+  $.ajax({
+    url:"./ajax/ajax6.php",
+    success: function(response){
+        location.reload();
+    }
+});
+}
 function approvedRide(id){
     $.ajax({
         type:"POST",

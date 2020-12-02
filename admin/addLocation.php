@@ -60,13 +60,13 @@ $tl = $location->totalLocation($db);
     <div>
         <form  id="form1" method="POST" action="" style="display:none">
             <table>
-                <tr><input type="hidden" id="id" name="id">
-                    <td><input type="text" id="name" name="name" placeholder="Enter Location"></td>
-                    <td><input type="text" id="dist" name="dist" placeholder="Enter Distance from above"></td>
-                    <td><input id="sub" type="submit" value="" name=""></td>
-                </table>
-            </form>
-        </div>
-
+                <input type="hidden" id="id" name="id">
+                <td><input type="text" id="name" name="name" placeholder="Enter Location"></td>
+                <td><input type="text" id="dist" name="dist" placeholder="Enter Distance from above"></td>
+                <td><input id="sub" type="submit" value="" name=""></td>
+            </table>
+        </form>
     </div>
-    <?php  include "footer.php";?>
+
+</div>
+<?php  include "footer.php";?>
