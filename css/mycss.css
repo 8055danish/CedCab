@@ -25,6 +25,7 @@ li a, .dropbtn1 {
 }
 .hov:hover {
   background-color: #202020;
+  color:white;
 }
 a:link {
   text-decoration: none;

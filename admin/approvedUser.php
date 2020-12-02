@@ -10,6 +10,7 @@
  <?php require "header.php" ?>
  <div class="wrapper align">
  	<h2 class="align">Current User(<?php echo count($users); ?>)</h2>
+ 	<hr>
  	<?php if(count($users)>0): ?>
  		<?php foreach($users as $key=>$value): ?>
  			<h5><?php echo $value['user_name'] ?></h5>

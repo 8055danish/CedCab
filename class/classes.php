@@ -236,20 +236,25 @@ class ride{
 	}
 	function my_ride($db){
 		session_start();
-		$query0="SELECT `ride_id` from `tbl_ride` WHERE `status`='1' AND customer_user_id='".$_SESSION['user_id']."'";
-		$stmt0 = $db->prepare($query0);
-		$stmt0->execute();
-		$ride = $stmt0->fetch(PDO::FETCH_ASSOC);
-		if($ride['ride_id']){
-			echo "Pending Ride Exist,Please Wait..";
+		if(isset($_SESSION['login'])){
+			$query0="SELECT `ride_id` from `tbl_ride` WHERE `status`='1' AND customer_user_id='".$_SESSION['user_id']."'";
+			$stmt0 = $db->prepare($query0);
+			$stmt0->execute();
+			$ride = $stmt0->fetch(PDO::FETCH_ASSOC);
+			if($ride['ride_id']){
+				echo "Pending Ride Exist,Please Wait..";
+				return;
+			}
 		}
-		else if(isset($_SESSION['login'])){
+		if(isset($_SESSION['login'])){
 			$query = "INSERT INTO `tbl_ride`( `ride_date`, `from`, `to`, `total_distance`, `luggage`, `total_fare`, `status`, `customer_user_id`) VALUES (now()".",'".$_SESSION['from']."','".$_SESSION['to']."','".$_SESSION['total_distance']."','".$_SESSION['luggage']."','".$_SESSION['total_price']."','1','".$_SESSION['user_id']."')";
 			$stmt = $db->prepare($query);
 			$stmt->execute();
-			echo "Success,waiting for admin to approve,Check ride section";}
+			echo "Success,waiting for admin to approve,Check ride section";
+			return;}
 			else{
 				echo "Please Login First";
+				return;
 			}
 		}
 		function cancelledRides($db){

@@ -11,7 +11,7 @@ $rides = $ride->userPendingRide($id,$db);
 <?php include "header.php"; ?>
 <div class="wrapper">
 	<table class="adminTable">
-		<h2 class="align">Your Total Pending rides(<?php echo count($rides); ?>)</h2>
+		<h2 class="align">Your Total Pending rides(<?php echo count($rides); ?>)</h2><hr>
 		<?php if(count($rides)>0): ?>
 			<h6 class="align" style="color:yellow">Please Wait Admin to Approve Your Ride</h6>
 			<hr>

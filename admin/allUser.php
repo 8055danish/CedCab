@@ -13,6 +13,7 @@
  <div class="wrapper">
  	<table class="adminTable">
  		<h2 class="align">Total Users(<?php echo count($users); ?>)</h2>
+ 		<hr>
  		<?php if(count($users)>0): ?>
  			<tr><th>USER ID </th><th>NAME </th><th>USERNAME </th><th>DATE/TIME OF SIGNUP </th><th>MOBILE </th><th>ACCESS </th><th>isADMIN </th><th></th></tr>
  			<?php foreach($users as $key=>$value): ?>

@@ -24,7 +24,7 @@ if(isset($_POST['submit'])){
 		<form action="" method="post" novalidate>
 			<tr>
 				<td><label for="username">Username</label></td>
-				<td><input type="text" name="username" value="<?php echo $user['user_name']; ?>" disabled></td>
+				<td><input style="color:white;" type="text" name="username" value="<?php echo $user['user_name']; ?>" disabled></td>
 			</tr>
 			<tr>
 				<td><label for="name">Name</label></td>

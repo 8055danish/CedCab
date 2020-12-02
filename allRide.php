@@ -22,7 +22,7 @@ foreach ($rides as $key=>$value) {
 	<div class="row">
 		<div class="column1">
 			<h2 class="align">Your Total rides(<?php echo count($rides); ?>)</h2>
-			<h6 class="align">You have spend Rs.<?php echo $tp;?> on Total Rides</h6><br><br>
+			<h6 class="align">You have spend Rs.<?php echo $tp;?> on Total Rides</h6><br><br><hr>
 			<table class="adminTable">
 				<?php if(count($rides)>0): ?>
 					<tr class="color"><th>RIDE_ID&nbsp;</th><th>RIDE_DATE&nbsp;</th><th>FROM&nbsp;</th><th>TO&nbsp;</th><th>TOTAL_FARE&nbsp;</th></tr>

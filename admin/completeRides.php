@@ -10,7 +10,7 @@ $rides = $ride->completeRides($db);
 <?php include "header.php"; ?>
 <div class="wrapper">
 	<table class="adminTable">
-		<h2 class="align">Total Complete Rides(<?php echo count($rides); ?>)</h2>
+		<h2 class="align">Total Complete Rides(<?php echo count($rides); ?>)</h2><hr>
 		<?php if(count($rides)>0): ?>
 			<tr><th>RIDE ID </th><th>RIDE DATE </th><th>FROM </th><th>TO </th><th>TOTAL DISTANCE </th><th>LUGGAGE </th><th>TOTAL FARE </th><th>STATUS</th><th>USER ID </th></tr>
 			<?php foreach($rides as $key=>$value): ?>

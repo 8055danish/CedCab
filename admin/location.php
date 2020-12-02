@@ -12,7 +12,7 @@ foreach($tl as $key) {
 ?>
 <?php include 'header.php'; ?>
 <div class="wrapper">
-	<h2 class="align">Here Are Total <?php echo $t;?> Locations</h2>
+	<h2 class="align">Here Are Total <?php echo $t;?> Locations</h2><hr>
 	<table>
 		<thead>
 			<tr>

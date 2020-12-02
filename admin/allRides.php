@@ -15,10 +15,10 @@ $rides = $ride->allRides($s,$db);
 <div class="wrapper">
 	<div class="row">
 		<div class="column1">
-			<h2 class="align">Total rides(<?php echo count($rides); ?>)</h2>
+			<h2 class="align">Total rides(<?php echo count($rides); ?>)</h2><hr>
 			<table class="adminTable">
 				<?php if(count($rides)>0): ?>
-					<tr><th>RIDE ID </th><th>RIDE DATE </th><th>FROM </th><th>TO </th><th>TOTAL DISTANCE </th><th>LUGGAGE </th><th>TOTAL FARE </th><th>STATUS</th><th>USER ID </th></tr>
+					<tr><th>RIDE_ID&nbsp;</th><th>RIDE_DATE&nbsp;</th><th>FROM&nbsp;</th><th>TO&nbsp;</th><th>TOTAL_DISTANCE&nbsp;</th><th>LUGGAGE&nbsp;</th><th>TOTAL_FARE&nbsp;</th><th>STATUS&nbsp;</th><th>USER_ID</th></tr>
 					<?php foreach($rides as $key=>$value): ?>
 						<tr style="color:red;">   
 							<td><?php echo $value['ride_id']?></td>
