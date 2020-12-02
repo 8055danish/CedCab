@@ -1,5 +1,15 @@
 <?php session_start(); ?>
 <?php
+if(isset($_SESSION['start']) && time()-$_SESSION["start"]>180)   
+{ 
+ unset($_SESSION['from']);
+ unset($_SESSION['to']);
+ unset($_SESSION['total_distance']);
+ unset($_SESSION['luggage']);
+ unset($_SESSION['total_price']);  
+} 
+?>
+<?php
 include 'class/classes.php';
 include 'class/conn.php';
 $database = new Database();
@@ -13,7 +23,7 @@ $tl = $location->totalLocation($db);
         <h2 style="color:yellow;"><?php
         if(isset($_SESSION['login']) && isset($_SESSION['total_price'])){
             echo "You have 1 ride in pending
-             <input type='button' class='btn-primary' value='See Deatil' data-toggle='modal' data-target='#myModal'>";
+            <input type='button' class='btn-primary' value='See Deatil' data-toggle='modal' data-target='#myModal'>";
         }
         ?></h2>
         <h1>Book a Cab to Reach your Destinations</h1>
@@ -69,28 +79,28 @@ $tl = $location->totalLocation($db);
         </div>
     </div>
 </div>
- <div class="modal fade" id="myModal">
+<div class="modal fade" id="myModal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
           <h4 class="modal-title">Pending Ride</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <!-- Modal body -->
-        <div class="modal-body" style="background-color: #333;color:white">
-             <h5>From :<?php echo $_SESSION['from'];?></h5>
-             <h5>To :<?php echo $_SESSION['to'];?></h5>
-             <h5>Total Distance :<?php echo $_SESSION['total_distance'];?></h5>
-             <h5>Total Luggage :<?php if($_SESSION['luggage'])echo $_SESSION['luggage'];else echo '0';?></h5>
-             <h5>Total Fare :<?php echo $_SESSION['total_price'];?></h5>
-        </div>
-        <!-- Modal footer -->
-        <div class="modal-footer">
-             <button type="button" class="btn-danger" onclick="deleteRide1()">Delete</button>
-          <button type="button" class="btn-primary" onclick="myRide()">Confirm</button>
-        </div>
       </div>
-    </div>
-  </div>
+      <!-- Modal body -->
+      <div class="modal-body" style="background-color: #333;color:white">
+         <h5>From :<?php echo $_SESSION['from'];?></h5>
+         <h5>To :<?php echo $_SESSION['to'];?></h5>
+         <h5>Total Distance :<?php echo $_SESSION['total_distance'];?></h5>
+         <h5>Total Luggage :<?php if($_SESSION['luggage'])echo $_SESSION['luggage'];else echo '0';?></h5>
+         <h5>Total Fare :<?php echo $_SESSION['total_price'];?></h5>
+     </div>
+     <!-- Modal footer -->
+     <div class="modal-footer">
+         <button type="button" class="btn-danger" onclick="deleteRide1()">Delete</button>
+         <button type="button" class="btn-primary" onclick="myRide()">Confirm</button>
+     </div>
+ </div>
+</div>
+</div>
 <?php include "footer.php"; ?>

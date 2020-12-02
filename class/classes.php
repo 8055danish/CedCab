@@ -159,11 +159,6 @@ class ride{
 
 		$total_distance =abs($location1['distance'] - $location2['distance']);
 
-		$_SESSION['total_distance'] = $total_distance;
-		$_SESSION['from'] = $location1['name'];
-		$_SESSION['to'] = $location2['name'];
-		$_SESSION['luggage'] = $w;
-
 		if($c == 'CabMicro'){
 			if($total_distance==10)
 				$price = 185; //185=50+10*13.50
@@ -229,7 +224,11 @@ class ride{
 				$weight = 2*200;
 			}	
 		}
-
+		$_SESSION['start'] = time();
+		$_SESSION['total_distance'] = $total_distance;
+		$_SESSION['from'] = $location1['name'];
+		$_SESSION['to'] = $location2['name'];
+		$_SESSION['luggage'] = $w;
 		$total_price =$price + $weight;
 		$_SESSION['total_price'] = $total_price;
 		echo $total_price;
