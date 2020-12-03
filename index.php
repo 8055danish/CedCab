@@ -23,7 +23,7 @@ $tl = $location->totalLocation($db);
         <h2 style="color:yellow;"><?php
         if(isset($_SESSION['login']) && isset($_SESSION['total_price'])){
             echo "You have 1 ride in pending
-            <input type='button' class='btn-primary' value='See Deatil' data-toggle='modal' data-target='#myModal'>";
+            <input type='button' class='btn-primary' value='See Detail' data-toggle='modal' data-target='#myModal'>";
         }
         ?></h2>
         <h1>Book a Cab to Reach your Destinations</h1>

@@ -90,7 +90,7 @@ foreach ($totalLocation as $key4=>$value4) {
 		<div class="tile tileLargo amarelo"><br><br><h5>Total Revenue<br> Rs.<?php echo $tf; ?></h5></div> 		
 		<div class="tile tileLargo verde"><br><br><small><h5>Total Distance<br> <?php echo $td;?> Km</h5></small></div>
 		<div class="tile tileLargo vermelho"><br><br><h5>Total <?php echo $tl;?> Location<br> Availaible To<br> Travel</h5></div> 
-		<div class="tile tileLargo amarelo"><br><br><br><h5>Comming Soon..</h5></div>
+		<div class="tile tileLargo amarelo"><br><br><br><h5>Coming Soon..</h5></div>
 	</div>
 </div>
 <?php require "footer.php" ?>

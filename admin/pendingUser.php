@@ -15,7 +15,7 @@
  		<?php foreach($users as $key=>$value): ?>
  			<h5><?php echo $value['user_name'] ?></h5>&nbsp;
  			<select onchange="blockunblock(<?php echo $value['user_id']; ?>,<?php echo $value['isblock']; ?>)">
- 				<option selected="selected" disabled="disabled"><?php echo "Block" ?></option>
+ 				<option selected="selected" disabled="disabled">Block</option>
  				<option value="1">Unblock</option>
  			</select><br>
  			

@@ -15,8 +15,8 @@
  		<?php foreach($users as $key=>$value): ?>
  			<h5><?php echo $value['user_name'] ?></h5>
  			<select onchange="blockunblock(<?php echo $value['user_id']; ?>,<?php echo $value['isblock']; ?>)">
- 				<option selected="selected" disabled="disabled"><?php echo "Block" ?></option>
- 				<option value="1">Unblock</option>
+ 				<option selected="selected" disabled="disabled">Unblock</option>
+ 				<option value="1">block</option>
  			</select><br>
  		<?php endforeach; ?>
  		<?php else:echo "<div class='align'>No Records Found !!!</div>" ?>
