@@ -12,22 +12,21 @@ $rides = $ride->allRides($s,$db);
 ?>
 <?php include "header.php"; ?>
 <div class="wrapper">
-	<div class="row">
 		<div class="column1">
 			<h2 class="align">Total rides(<?php echo count($rides); ?>)</h2><hr>
 			<table class="adminTable">
 				<?php if(count($rides)>0): ?>
-					<tr><th>RIDE_ID</th><th>RIDE_DATE</th><th>FROM</th><th>TO</th><th>TOTAL_DISTANCE</th><th>LUGGAGE</th><th>TOTAL_FARE</th><th>STATUS</th><th>USER_ID</th><th>ACTION1</th><th>ACTION2</th></tr>
+					<tr><th>RIDE_ID</th><th>RIDE_DATE</th><th>FROM</th><th>TO</th><th>DISTANCE</th><th>LUGGAGE</th><th>FARE</th><th>STATUS</th><th>USER_ID</th><th>ACTION1</th><th>ACTION2</th></tr>
 					<?php foreach($rides as $key=>$value): ?>
 						<tr style="color:red;">   
 							<td><?php echo $value['ride_id']?></td>
 							<td><?php echo $value['ride_date']?></td>
 							<td><?php echo $value['from']?></td>
 							<td><?php echo $value['to']?></td>
-							<td><?php echo $value['total_distance']?></td>
+							<td><?php echo $value['total_distance']?>KM</td>
 							<td><?php if( $value['luggage'])echo $value['luggage']."KG";else echo "0KG"?></td>
-							<td><?php echo $value['total_fare']?></td>
-							<td><?php echo $value['status']?></td>
+							<td>Rs.<?php echo $value['total_fare']?></td>
+							<td><?php if($value['status']=='0')echo "Cancelled";elseif($value['status']=='1')echo "Pending";else echo"Complete";?></td>
 							<td><?php echo $value['customer_user_id']?></td>
 							<td><input type="button" value="Invoice" data-toggle="modal" data-target="#myModal-<?php echo $value['ride_id']; ?>"></td>
 							<td><input type="button" value="Delete Ride" onclick=" deleteRide(<?php echo $value['ride_id']?>)"></td>
@@ -48,7 +47,6 @@ $rides = $ride->allRides($s,$db);
 					</select>
 				</form>
 			</div>
-		</div>
 	</div>
 	<?php foreach ($rides as $key=>$value): ?>
 		<!-- The Modal -->

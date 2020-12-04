@@ -26,8 +26,8 @@ $tl = $location->locationShow($db);
     <div class="text-center text-color p-5">
         <h2 style="color:yellow;"><?php
         if(isset($_SESSION['login']) && isset($_SESSION['total_price'])){
-            echo "You have 1 ride in pending
-            <input type='button' class='btn-primary' value='See Detail' data-toggle='modal' data-target='#myModal'>";
+            echo "You have 1 ride
+            <input type='button' class='btn-primary' value='Click to Confirm' data-toggle='modal' data-target='#myModal'>";
         }
         ?></h2>
         <h2 id="head"></h2>

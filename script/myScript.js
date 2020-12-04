@@ -66,6 +66,9 @@ function validate(n){
                     type:"POST",
                     url:"./ajax/ajax2.php",
                     success: function(response) {
+                        if(response="redirect"){
+                            window.location.href = "./login.php";
+                        }
                         alert(response);
                     }
                 });

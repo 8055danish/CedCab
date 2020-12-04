@@ -281,8 +281,7 @@ class ride{
 			echo "Success,waiting for admin to approve,Check ride section";
 			return;}
 			else{
-				echo "Please Login First";
-				return;
+				echo "redirect";
 			}
 		}
 		function cancelledRides($s,$db){
