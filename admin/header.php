@@ -1,3 +1,10 @@
+<?php session_start(); ?>
+<?php
+if(!isset($_SESSION['alogin'])){
+	header("location:..");
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>

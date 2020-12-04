@@ -102,6 +102,11 @@ class user{
     	$stmt = $db->prepare($query);
     	$stmt->execute();
     }
+    function cancelledRide($id,$db){
+    	$query = "UPDATE `tbl_ride` SET `status`='0' WHERE `ride_id`='".$id."'";
+    	$stmt = $db->prepare($query);
+    	$stmt->execute();
+    }
 }
 class admin{
 	function isBlockUser($db){

@@ -45,8 +45,8 @@ foreach ($rides as $key=>$value) {
 					<select name="sort" id="sort" onchange="this.form.submit()">
 						<option selected disabled>Sort By</option>
 						<option value="dateasc">By Date ASC</option>
-						<option value="faredsc">By Fare DSC</option>
-						<option value="dateasc">By Date ASC</option>
+						<option value="datedsc">By Date DSC</option>
+						<option value="fareasc">By Fare ASC</option>
 						<option value="faredsc">By Fare DSC</option>
 					</select>
 				</form>

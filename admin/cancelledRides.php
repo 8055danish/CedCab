@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <?php
 include '../class/classes.php';
 include '../class/conn.php';

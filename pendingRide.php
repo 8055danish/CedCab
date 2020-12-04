@@ -25,7 +25,7 @@ $rides = $ride->userPendingRide($id,$db);
 					<td><?php echo $value['total_distance']?></td>
 					<td><?php if( $value['luggage'])echo $value['luggage']."KG";else echo "0KG"?></td>
 					<td><?php echo $value['total_fare']?></td>
-					<td><input type="button" value="cancel Ride" onclick=" cancelledRide(<?php echo $value['ride_id']?>)"></td>
+					<td><input type="button" value="cancel Ride" onclick=" cancelledRide1(<?php echo $value['ride_id']?>)"></td>
 				</tr>
 			<?php endforeach; ?>
 			<?php else:echo "<div class='align'>No Records Found !!!</div>" ?>

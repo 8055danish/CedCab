@@ -78,7 +78,7 @@ $tl = $location->locationShow($db);
                 </div>
                 <input type="number" onkeypress="return /[0-9]/i.test(event.key)" id="weight" class="form-control input-bg" placeholder="Enter Weight in KG">
             </div>
-            <button onclick="validate()" class="btn"><b>Calculate Total Price</b></button>
+            <button onclick="validate(<?php if(isset($_SESSION['total_price']))echo '0';else echo '1';?>)" class="btn"><b>Calculate Total Price</b></button>
         </div>
     </div>
 </div>

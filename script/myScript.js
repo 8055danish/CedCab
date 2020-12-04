@@ -15,66 +15,71 @@ function checkCarType()
         $("#weight-div").hide();
     }
     else{
-       $("#weight-div").show();
-   }    
+     $("#weight-div").show();
+ }    
 }
 
-function validate(){
-    var pickup = $("#pickup").val();
-    var drop = $("#drop").val();
-    var carType = $("#carType").val();
-    var weight = $("#weight").val();
-    if (!pickup)
-    {
-        alert("Please Select current Location");
-        return false;
+function validate(n){
+    if(n=='0'){
+        alert("Ride Exist\nPlease Perform Action");
     }
-    if (!drop) 
-    {
-        alert("Please Select Drop Location");
-        return false;
-    }
-    if(pickup==drop)
-    {
-        alert("Both Location shouldn't be same");
-        return false;
-    }
-    if (!carType) 
-    {
-        alert("Please Select Car Type");
-        return false;
-    }
-    if(carType!="CabMicro")
-    {
-        if (!weight)
+    else{
+        var pickup = $("#pickup").val();
+        var drop = $("#drop").val();
+        var carType = $("#carType").val();
+        var weight = $("#weight").val();
+        if (!pickup)
         {
-            alert("Please Add Luggage Weight");
+            alert("Please Select current Location");
             return false;
         }
-    }
-    $.ajax({
-        type:"POST",
-        url:"./ajax/ajax1.php",
-        data:{p:pickup,d:drop,c:carType,w:weight},
-        success: function(response) {
-            if (confirm("Total price is: "+response+"\nDo you want to book Cab ?")) { 
-             $.ajax({     
-                type:"POST",
-                url:"./ajax/ajax2.php",
-                success: function(response) {
-                    alert(response);
-                }
-            });
-         } 
-         else {
+        if (!drop) 
+        {
+            alert("Please Select Drop Location");
+            return false;
+        }
+        if(pickup==drop)
+        {
+            alert("Both Location shouldn't be same");
+            return false;
+        }
+        if (!carType) 
+        {
+            alert("Please Select Car Type");
+            return false;
+        }
+        if(carType!="CabMicro")
+        {
+            if (!weight)
+            {
+                alert("Please Add Luggage Weight");
+                return false;
+            }
+        }
+        $.ajax({
+            type:"POST",
+            url:"./ajax/ajax1.php",
+            data:{p:pickup,d:drop,c:carType,w:weight},
+            success: function(response) {
+                if (confirm("Total price is: "+response+"\nDo you want to book Cab ?")) { 
+                   $.ajax({     
+                    type:"POST",
+                    url:"./ajax/ajax2.php",
+                    success: function(response) {
+                        alert(response);
+                    }
+                });
+               } 
+               else {
 
-          console.log('Not confirm');
-      }
-  }
-});
+                  console.log('Not confirm');
+              }
+          }
+      });
+    }
 }
 function myRide(){
- $.ajax({     
+   $.ajax({     
     type:"POST",
     url:"./ajax/ajax2.php",
     success: function(response) {
@@ -142,31 +147,41 @@ function cancelledRide(id){
             location.reload();
         }
     });
+}
+function cancelledRide1(id){
+    $.ajax({
+        type:"POST",
+        url:"./ajax/ajax10.php",
+        data:{id:id},
+        success: function(response){
+            location.reload();
+        }
+    });
 
 }
 function deleteRide(id){
     if (confirm("Are You Sure!")) {
-     $.ajax({
+       $.ajax({
         type:"POST",
         url:"../ajax/ajax4.php",
         data:{id:id},
         success: function(response){
-         location.reload();
-     }
- });
- }
+           location.reload();
+       }
+   });
+   }
 }
 function deleteMyRide(id){
     if (confirm("Are You Sure!")) {
-     $.ajax({
+       $.ajax({
         type:"POST",
         url:"./ajax/ajax9.php",
         data:{id:id},
         success: function(response){
-         location.reload();
-     }
- });
- }
+           location.reload();
+       }
+   });
+   }
 }
 function addLoc(){
     $("#form1").css("display","block");
@@ -183,8 +198,8 @@ function editLoc(id,name,dist){
     
 }
 function deleteLoc(id){
- if (confirm("Are You Sure!")) {
-     $.ajax({
+   if (confirm("Are You Sure!")) {
+       $.ajax({
         type:"POST",
         url:"../ajax/ajax5.php",
         data:{id:id},
@@ -192,7 +207,7 @@ function deleteLoc(id){
             location.reload();
         }
     });
- }
+   }
 }
 function buloc(id,s){
     if (confirm("Are You Sure!")) {

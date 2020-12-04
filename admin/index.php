@@ -1,9 +1,3 @@
-<?php session_start(); ?>
-<?php
-if(!isset($_SESSION['alogin'])){
-	header("location:..");
-}
-?>
 <?php
 include '../class/classes.php';
 include '../class/conn.php';
