@@ -10,11 +10,11 @@ include '../class/conn.php';
 $database = new Database();
 $db = $database->getConnection();
 $admin0 = new admin();
-$alluser = $admin0->allUser($db);
+$alluser = $admin0->allUser("",$db);
 $admin1 = new admin();
 $pendinguser = $admin1->isBlockUser($db);
 $ride0 = new ride();
-$pendingride = $ride0->pendingRides($db);
+$pendingride = $ride0->pendingRides("",$db);
 $ride1 = new ride();
 $s="";
 $allride = $ride1->allRides($s,$db);
@@ -87,10 +87,10 @@ foreach ($totalLocation as $key4=>$value4) {
 	</div>
 	<br>
 	<div class="linha align">
-		<div class="tile tileLargo amarelo"><br><br><h5>Total Revenue<br> Rs.<?php echo $tf; ?></h5></div> 		
-		<div class="tile tileLargo verde"><br><br><small><h5>Total Distance<br> <?php echo $td;?> Km</h5></small></div>
-		<div class="tile tileLargo vermelho"><br><br><h5>Total <?php echo $tl;?> Location<br> Availaible To<br> Travel</h5></div> 
-		<div class="tile tileLargo amarelo"><br><br><br><h5>Coming Soon..</h5></div>
+		<div class="tile tileLargo amarelo"><br><hr><br><h5>Total Revenue<br> Rs.<?php echo $tf; ?></h5><hr></div> 		
+		<div class="tile tileLargo verde"><br><hr><br><small><h5>Total Distance<br> <?php echo $td;?> Km</h5><hr></small></div>
+		<div class="tile tileLargo vermelho"><br><hr><h5>Total <?php echo $tl;?> Location<br> Availaible To<br> Travel</h5><hr></div> 
+		<div class="tile tileLargo amarelo"><br><hr><br><h5>Coming Soon..</h5><br><hr></div>
 	</div>
 </div>
 <?php require "footer.php" ?>

@@ -19,6 +19,12 @@ if(isset($_POST['submit'])){
 
 ?>
 <?php include 'header.php' ?>
+<style>
+  table,th,td{
+border:none;
+border-collapse: none;
+}
+</style>
 <div class="wrapper">
 	<table>
 		<form action="" method="post" novalidate>
@@ -28,11 +34,11 @@ if(isset($_POST['submit'])){
 			</tr>
 			<tr>
 				<td><label for="name">Name</label></td>
-				<td><input type="text" name="name" value="<?php echo $user['name']; ?>"></td>
+				<td><input type="text" name="name" onkeypress="return /[a-zA-Z\s]/i.test(event.key)" value="<?php echo $user['name']; ?>"></td>
 			</tr>
 			<tr>
 				<td><label for="mobile">Mobile</label></td>
-				<td><input type="text" name="mobile" value="<?php echo $user['mobile']; ?>"></td>
+				<td><input type="text" name="mobile" minlength="10" maxlength="10" onkeypress="return /[0-9]/i.test(event.key)" value="<?php echo $user['mobile']; ?>"></td>
 			</tr>
 			<tr>
 				<td></td>
@@ -41,7 +47,9 @@ if(isset($_POST['submit'])){
 		</table>
 	</form>
 	<div>
-		<h2 style="color:red;text-align:center;"><?php echo $msg ?></h2>
+		<h2 style="color:red;text-align:center;"><?php if(isset($_GET['s'])){
+	echo $msg = $_GET['s'];
+}?></h2>
 	</div>
 </div>
 

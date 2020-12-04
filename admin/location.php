@@ -17,9 +17,8 @@ foreach($tl as $key) {
 		<thead>
 			<tr>
 				<th>ID </th>
-				<th></th>
 				<th>Name </th>
-				<th></th>
+				<th>Available</th>
 				<th>Distance </th>
 			</tr>
 		</thead>
@@ -27,9 +26,8 @@ foreach($tl as $key) {
 			<?php foreach ($tl as $key=>$value): ?>
 				<tr>
 					<td><?php echo $value['id'];?></td>
-					<th></th>
 					<td><?php echo $value['name'];?></td>
-					<th></th>
+					<td><?php if( $value['is_available'])echo "Enable";else echo "Disable";?></td>
 					<td><?php echo $value['distance'];?></td>
 				</tr>
 			<?php endforeach; ?>

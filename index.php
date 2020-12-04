@@ -1,4 +1,8 @@
 <?php session_start(); ?>
+<?php if(isset($_SESSION['alogin'])){
+  unset($_SESSION['alogin']);
+}
+?>
 <?php
 if(isset($_SESSION['start']) && time()-$_SESSION["start"]>180)   
 { 
@@ -15,7 +19,7 @@ include 'class/conn.php';
 $database = new Database();
 $db = $database->getConnection();
 $location = new location();
-$tl = $location->totalLocation($db); 
+$tl = $location->locationShow($db); 
 ?>
 <?php include "header.php"; ?>
 <div class="container-fluid pb-5">
@@ -26,8 +30,7 @@ $tl = $location->totalLocation($db);
             <input type='button' class='btn-primary' value='See Detail' data-toggle='modal' data-target='#myModal'>";
         }
         ?></h2>
-        <h1>Book a Cab to Reach your Destinations</h1>
-        <h5>Choose from range of Categories and Prices</h5>
+        <h2 id="head"></h2>
     </div>
     <div class="pl-5 pr-5">
         <div class="form-div col-12 col-xs-12 col-sm-12 col-md-4 col-lg-4 bg-white text-center pt-3 pb-3">
@@ -73,7 +76,7 @@ $tl = $location->totalLocation($db);
                 <div class="input-group-prepend">
                     <span class="input-group-text"><small>Luggage</small></span>
                 </div>
-                <input type="number" id="weight" class="form-control input-bg" placeholder="Enter Weight in KG">
+                <input type="number" onkeypress="return /[0-9]/i.test(event.key)" id="weight" class="form-control input-bg" placeholder="Enter Weight in KG">
             </div>
             <button onclick="validate()" class="btn"><b>Calculate Total Price</b></button>
         </div>
@@ -103,4 +106,14 @@ $tl = $location->totalLocation($db);
  </div>
 </div>
 </div>
+<script>
+let spantyped = new Typed("#head", {
+  strings: ["Book a Cab to Reach your Destination","Choose from range of Categories and Prices"],
+  typeSpeed: 20,
+  backSpeed: 20,
+  loop: true,
+  cursorChar: "",
+});
+
+</script>
 <?php include "footer.php"; ?>

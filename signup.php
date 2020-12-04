@@ -15,6 +15,12 @@ if(isset($_POST['submit'])){
 }
 ?>
 <?php require "header.php" ?>
+<style>
+  table,th,td{
+border:none;
+border-collapse: none;
+}
+</style>
 <div class="wrapper">
   <h1 class="align">User Registration</h1>
   <table class="center">
@@ -25,11 +31,11 @@ if(isset($_POST['submit'])){
       </tr>
       <tr>
         <td>Name:</td>
-        <td><input type="text" name="name" placeholder="Enter Name"></td>
+        <td><input type="text" name="name" onkeypress="return /[a-zA-Z\s]/i.test(event.key)" placeholder="Enter Name"></td>
       </tr>
       <tr>
         <td>Mobile No:</td>
-        <td><input type="number" maxlength="10" name="mobile" placeholder="Enter 10 Digit Mobile No."></td>
+        <td><input type="text" maxlength="10" onkeypress="return /[0-9]/i.test(event.key)" name="mobile" placeholder="Enter 10 Digit Mobile No."></td>
       </tr>
       <tr>
         <td>Password:</td>

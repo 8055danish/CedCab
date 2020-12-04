@@ -5,17 +5,23 @@ include '../class/conn.php';
 $msg= "";
 
 if(isset($_POST['submit'])){
-	$pass = $_POST['pass'];
+	$pass1 = $_POST['pass'];
 	$npass = $_POST['npass'];
 	$cpass = $_POST['cpass'];
 	$database = new Database();
 	$db = $database->getConnection();
-	$pass = new admin();
-	$msg = $pass->updatePass($pass,$npass,$cpass,$db);
+	$pass = new user();
+	$msg = $pass->updatePass($pass1,$npass,$cpass,$db);
 }
 
 ?>
 <?php include 'header.php' ?>
+<style>
+	table,th,td{
+		border:none;
+		border-collapse: none;
+	}
+</style>	
 <div class="wrapper">
 	<table class="center">
 		<form action="" method="post" novalidate>

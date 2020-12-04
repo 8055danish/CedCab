@@ -4,25 +4,21 @@ class user{
 		if($user_name=="" && $password==""){
 			return "All fields must be filled";
 		}
-		$query0 = "SELECT `user_name`, `password` FROM `admin`";
-		$stmt0 = $db->prepare($query0);
-		$stmt0->execute();
-		$admin = $stmt0->fetch(PDO::FETCH_ASSOC);
-
-		if($user_name==$admin['user_name'] and $password==$admin['password']){
-			$_SESSION['alogin']="true";
-			header("location:admin");
-		}
 		$password = md5($password);
-		$user_check_query = "SELECT * FROM `tbl_user` WHERE `user_name`='$user_name' and `password`='$password' LIMIT 1";
+		$user_check_query = "SELECT * FROM `tbl_user` WHERE `user_name` LIKE '%".$user_name."%' AND `password`='$password' LIMIT 1";
 		$stmt = $db->prepare($user_check_query);
 		$stmt->execute();
 		$user = $stmt->fetch(PDO::FETCH_ASSOC);
-		if($user['user_name']==$user_name and $user['password']==$password && $user['isblock']=='0') {
+		if(strcasecmp($user['user_name'],$user_name)=="0" and $user['password']==$password && $user['is_admin']=='1') {
+			$_SESSION['alogin']="true";
+			$_SESSION['user_id'] = $user['user_id'];
+			header("location:admin");
+		}
+		else if(strcasecmp($user['user_name'],$user_name)=="0" and $user['password']==$password && $user['isblock']=='0') {
 			$_SESSION['login'] = "false";
 			return "Wait for admin to aprrove";
 		}
-		else if($user['user_name']==$user_name and $user['password']==$password && $user['isblock']=='1') {
+		else if(strcasecmp($user['user_name'],$user_name)=="0" and $user['password']==$password && $user['isblock']=='1') {
 			if(isset($_POST['check'])){
 				setcookie('username',$user_name,time()+60*60*7);
 				setcookie('password',$password,time()+60*60*7);
@@ -46,12 +42,12 @@ class user{
 			return "Both Password should be same";
 			
 		}
-		$user_check_query = "SELECT `user_name` FROM `tbl_user` WHERE user_name='$user_name'";
+		$user_check_query = "SELECT `user_name` FROM `tbl_user` WHERE user_name LIKE '%".$user_name."%' LIMIT 1";
 		$stmt = $db->prepare($user_check_query);
 		$stmt->execute();
 		$user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user) { // if user exists
-        	if ($user['user_name']==$user_name) {
+        	if ($user['user_name']) {
         		return "Username already exists";
         	}
         }
@@ -73,25 +69,38 @@ class user{
     	$query ="UPDATE `tbl_user` SET `name`='".$name."',`mobile`='".$mobile."' WHERE `user_id` ='".$user_id."'";
     	$stmt = $db->prepare($query);
     	$stmt->execute();
-    	header("location:./profile.php");
+    	header("location:./profile.php?s=Profile Updated Successfully");
     }
-    function updatePass($pass,$npass,$cpass,$db){
-    	if($pass==""||$npass==""||$cpass==""){
+    function updatePass($pass1,$npass,$cpass,$db){
+    	if($pass1==""||$npass==""||$cpass==""){
     		return "All Field must be filled";
     	}
-    	if($npass!==$cpass){
-    		return "New Password and Confrim Password Should be same";
+    	
+    	else if($pass1==$npass or $pass1==$cpass){
+    		return "New Password Should not be same";
     	}
-    	$query = "SELECT * FROM `tbl_user` WHERE user_name='".$_SESSION['user_id']."'";
+    	else if($npass!=$cpass){
+    		return "New Password and Confirm Password Should be same";
+    	}
+    	$query = "SELECT * FROM `tbl_user` WHERE user_id='".$_SESSION['user_id']."'";
     	$stmt = $db->prepare($query);
     	$stmt->execute();
     	$user = $stmt->fetch(PDO::FETCH_ASSOC);
-    	if($user['password']==$pass || $npass==$cpass){
+    	$pass1 = md5($pass1);
+    	if($user['password']==$pass1){
     		$query1 = "UPDATE `tbl_user` SET `password`='".md5($cpass)."'";
     		$stmt1 = $db->prepare($query1);
     		$stmt1->execute();
     		return "Password Updated Successfully";
     	}
+    	else{
+    		return "Incorrect Current Password";
+    	}
+    }
+    function deleteMyRide($id,$db){
+    	$query = "DELETE FROM `tbl_ride` WHERE `ride_id`='".$id."'";
+    	$stmt = $db->prepare($query);
+    	$stmt->execute();
     }
 }
 class admin{
@@ -119,30 +128,40 @@ class admin{
 		$stmt = $db->prepare($query);
 		$stmt->execute();
 	}
-	function allUser($db){
-		$user_query = "SELECT * FROM `tbl_user`";
-		$stmt = $db->prepare($user_query);
-		$stmt->execute();
-		$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-		return $users;
+	function allUser($s,$db){
+		if($s==""){
+			$user_query = "SELECT * FROM `tbl_user` WHERE `is_admin`='0'";
+			$stmt = $db->prepare($user_query);
+			$stmt->execute();
+			$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $users;
+		}
+		if($s=="name"){
+			$user_query = "SELECT * FROM `tbl_user` ORDER BY `name`";
+			$stmt = $db->prepare($user_query);
+			$stmt->execute();
+			$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $users;
+		}
+		if($s=="dateasc"){
+			$user_query = "SELECT * FROM `tbl_user` ORDER BY `dateofsignup` ASC";
+			$stmt = $db->prepare($user_query);
+			$stmt->execute();
+			$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $users;
+		}
+		if($s=="datedsc"){
+			$user_query = "SELECT * FROM `tbl_user` ORDER BY `dateofsignup` DESC";
+			$stmt = $db->prepare($user_query);
+			$stmt->execute();
+			$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $users;
+		}
 	}
-	function updatePass($pass,$npass,$cpass,$db){
-		if($pass==""||$npass==""||$cpass==""){
-			return "All Field must be filled";
-		}
-		if($npass!==$cpass){
-			return "New Password and Confrim Password Should be same";
-		}
-		$query = "SELECT * FROM `admin`";
+	function deleteUser($id,$db){
+		$query = "DELETE FROM `tbl_user` WHERE `user_id`='".$id."'";
 		$stmt = $db->prepare($query);
 		$stmt->execute();
-		$admin = $stmt->fetch(PDO::FETCH_ASSOC);
-		if($admin['password']==$pass || $npass==$cpass){
-			$query1 = "UPDATE `admin` SET `password`='".$cpass."'";
-			$stmt1 = $db->prepare($query1);
-			$stmt1->execute();
-			return "Password Updated Successfully";
-		}
 	}
 }
 class ride{
@@ -261,29 +280,120 @@ class ride{
 				return;
 			}
 		}
-		function cancelledRides($db){
-			$query = "SELECT * FROM `tbl_ride` WHERE `status`='0'";
-			$stmt = $db->prepare($query);
-			$stmt->execute();
-			$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			return $rides;
+		function cancelledRides($s,$db){
+			if($s==""){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='0'";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="dateasc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='0' ORDER BY `ride_date` ASC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="datedsc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='0' ORDER BY `ride_date` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="fareasc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='0' ORDER BY `total_fare` ASC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="faredsc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='0' ORDER BY `total_fare` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+
 
 		}
-		function pendingRides($db){
-			$query = "SELECT * FROM `tbl_ride` WHERE `status`='1'";
-			$stmt = $db->prepare($query);
-			$stmt->execute();
-			$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			return $rides;
-		}
-		function completeRides($db){
-			$query = "SELECT * FROM `tbl_ride` WHERE `status`='2'";
-			$stmt = $db->prepare($query);
-			$stmt->execute();
-			$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			return $rides;
-		}
+		function pendingRides($s,$db){
+			if($s==""){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='1'";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="dateasc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='1' ORDER BY `ride_date` ASC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="datedsc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='1' ORDER BY `ride_date` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="fareasc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='1' ORDER BY `total_fare` ASC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="faredsc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='1' ORDER BY `total_fare` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
 
+		}
+		function completeRides($s,$db){
+			if($s==""){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' ";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="dateasc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' ORDER BY `ride_date` ASC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="datedsc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' ORDER BY `ride_date` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="fareasc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' ORDER BY `total_fare`";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="faredsc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' ORDER BY `total_fare` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+		}
 		function allRides($s,$db){
 			if($s==""){
 				$query = "SELECT * FROM `tbl_ride`";
@@ -292,20 +402,35 @@ class ride{
 				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				return $rides;
 			}
-			if($s=="date"){
+			if($s=="dateasc"){
 				$query = "SELECT * FROM `tbl_ride` ORDER BY `ride_date` ASC";
 				$stmt = $db->prepare($query);
 				$stmt->execute();
 				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				return $rides;
 			}
-			if($s=="fare"){
+			if($s=="datedsc"){
+				$query = "SELECT * FROM `tbl_ride` ORDER BY `ride_date` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="fareasc"){
 				$query = "SELECT * FROM `tbl_ride` ORDER BY `total_fare` ASC";
 				$stmt = $db->prepare($query);
 				$stmt->execute();
 				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				return $rides;
 			}
+			if($s=="faredsc"){
+				$query = "SELECT * FROM `tbl_ride` ORDER BY `total_fare` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+
 
 		}
 		function rideStatus($id,$s,$db){
@@ -322,12 +447,43 @@ class ride{
 			return $rides;
 
 		}
-		function userCompleteRide($id,$db){
-			$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' AND `customer_user_id`=".$id;
-			$stmt = $db->prepare($query);
-			$stmt->execute();
-			$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
-			return $rides;
+		function userCompleteRide($id,$s,$db){
+			if($s==""){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' AND `customer_user_id`=".$id;
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="dateasc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' AND `customer_user_id`='".$id."' ORDER BY `ride_date` ASC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="datedsc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' AND `customer_user_id`='".$id."' ORDER BY `ride_date` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="fareasc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' AND `customer_user_id`='".$id."' ORDER BY `total_fare` ASC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="faredsc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `status`='2' AND `customer_user_id`='".$id."' ORDER BY `total_fare` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+
 
 		}
 		function userAllRide($id,$s,$db){
@@ -338,20 +494,35 @@ class ride{
 				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				return $rides;
 			}
-			if($s=="date"){
+			if($s=="dateasc"){
 				$query = "SELECT * FROM `tbl_ride` WHERE `customer_user_id`='".$id."' ORDER BY `ride_date` ASC";
 				$stmt = $db->prepare($query);
 				$stmt->execute();
 				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				return $rides;
 			}
-			if($s=="fare"){
+			if($s=="datedsc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `customer_user_id`='".$id."' ORDER BY `ride_date` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+			if($s=="fareasc"){
 				$query = "SELECT * FROM `tbl_ride` WHERE `customer_user_id`='".$id."' ORDER BY `total_fare` ASC";
 				$stmt = $db->prepare($query);
 				$stmt->execute();
 				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				return $rides;
 			}
+			if($s=="faredsc"){
+				$query = "SELECT * FROM `tbl_ride` WHERE `customer_user_id`='".$id."' ORDER BY `total_fare` DESC";
+				$stmt = $db->prepare($query);
+				$stmt->execute();
+				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				return $rides;
+			}
+
 
 		}
 		function deleteRide($id,$db){
@@ -368,26 +539,50 @@ class ride{
 			$locations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			return $locations;
 		}
+		function locationShow($db){
+			$query = "SELECT * from `tbl_location` WHERE `is_available`='1' ORDER BY `distance` asc";
+			$stmt = $db->prepare($query);
+			$stmt->execute();
+			$locations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $locations;
+		}
 		function addLoc($name,$dist,$db){
-			$check_query = "SELECT `name` from `tbl_location` WHERE name='".ucfirst($name)."'";
+			$check_query = "SELECT `name` from `tbl_location` WHERE name LIKE '%".$name."%'";
 			$stmt0 = $db->prepare($check_query);
 			$stmt0->execute();
 			$loc = $stmt0->fetch(PDO::FETCH_ASSOC);
-			if($loc['name']==ucfirst($name)){
+			if(strcasecmp($loc['name'],$name)=="0"){
 				return "Location already exist";
 			}
 			$query = "INSERT INTO `tbl_location`(`name`, `distance`, `is_available`) VALUES ('".$name."','".$dist."','1')";
 			$stmt = $db->prepare($query);
 			$stmt->execute();
-			header("location:../admin/addLocation.php");
+			return "Location Added";
 		}
 		function updateLoc($id,$name,$dist,$db){
+			$check_query = "SELECT `name` from `tbl_location` WHERE name LIKE '%".$name."%'";
+			$stmt0 = $db->prepare($check_query);
+			$stmt0->execute();
+			$loc = $stmt0->fetch(PDO::FETCH_ASSOC);
+			if(strcasecmp($loc['name'],$name)=="0"){
+				return "Location already exist";
+			}
 			$query = "UPDATE `tbl_location` SET `name`='".$name."',`distance`='".$dist."' WHERE `id`=".$id;
 			$stmt = $db->prepare($query);
 			$stmt->execute();
+			return "Updated Successfully";
 		}
 		function deleteLoc($id,$db){
 			$query="DELETE FROM `tbl_location` WHERE `id`='".$id."'";
+			$stmt = $db->prepare($query);
+			$stmt->execute();
+		}
+		function buloc($id,$s,$db){
+			if($s==0)
+				$s = 1;
+			else
+				$s = 0;
+			$query = "UPDATE `tbl_location` SET `is_available`='".$s."' WHERE `id`=".$id;
 			$stmt = $db->prepare($query);
 			$stmt->execute();
 		}

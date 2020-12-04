@@ -13,6 +13,12 @@ if(isset($_POST['submit'])){
 }
 ?>
 <?php require "header.php" ?>
+<style>
+  table,th,td{
+border:none;
+border-collapse: none;
+}
+</style>
 <div class="wrapper">
   <h1 class="align">Universal Login</h1>
   <form name="form1" action="" method="post" novalidate>

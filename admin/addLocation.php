@@ -15,13 +15,21 @@ if(isset($_POST['update'])){
     $id = $_POST['id'];
     $name = $_POST['name'];
     $dist = $_POST['dist'];
-    $location->updateLoc($id,$name,$dist,$db);
+    $msg = $location->updateLoc($id,$name,$dist,$db);
+    $_POST['update']='';
 }
+
 ?>
 <?php
 $tl = $location->totalLocation($db); 
 ?>
 <?php include "header.php"; ?>
+<style>
+    .table1,.td1{
+        border:none;
+        border-collapse: none;
+    }
+</style>
 <div class="wrapper">
     <div>
         <div style="float:right">
@@ -32,41 +40,40 @@ $tl = $location->totalLocation($db);
         <thead>
             <tr>
                 <th>#</th>
-                <th></th>
-                <th></th>
                 <th>Name</th>
                 <th>Distance</th>
+                <th>ACTION1</th>
+                <th>ACTION2</th>
+                <th>ACTION3</th>
             </tr>
         </thead>
         <tbody style="color:red;">
             <?php $c=0; foreach($tl as $key=>$value): ?>
             <tr>
                 <td><?php  echo ++$c; ?></td>
-                <td></td>
-                <td></td>
                 <td><?php echo $value['name']; ?></td>
                 <td><?php echo $value['distance']; ?></td>
-                <td></td>
                 <?php $n= $value['name'];
                 $d = $value['distance'];
                 ?>
-                <td><input type="button" value="Edit Loc." onclick="editLoc(<?php echo "'".$value['id']."','".$value['name']."','".$value['distance']."'";?>)">
-                    <input type="button" value="Delete Loc."  onclick="deleteLoc(<?php echo $value['id']?>)"></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <h2 style="color:red;text-align:center;"><?php print_r( $msg) ?></h2>
-    <div>
-        <form  id="form1" method="POST" action="" style="display:none">
-            <table>
-                <input type="hidden" id="id" name="id">
-                <td><input type="text" id="name" name="name" placeholder="Enter Location"></td>
-                <td><input type="text" id="dist" name="dist" placeholder="Enter Distance from above"></td>
-                <td><input id="sub" type="submit" value="" name=""></td>
-            </table>
-        </form>
-    </div>
-
+                <td> <input type="button" value="<?php if($value['is_available']==0)echo "Enable";else echo "Disable"; ?>" onclick="buloc(<?php echo $value['id'].",".$value['is_available']?>)"></td></td>
+                <td><input type="button" value="Edit Loc." onclick="editLoc(<?php echo "'".$value['id']."','".$value['name']."','".$value['distance']."'";?>)"></td>
+                <td><input type="button" value="Delete Loc."  onclick="deleteLoc(<?php echo $value['id']?>)"></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<div>
+<br>
+    <form  id="form1" method="POST" action="" style="display:none">
+        <table class="table1">
+            <input type="hidden" id="id" name="id">
+            <td class="td1"><input type="text" id="name" name="name"  onkeypress="return /[a-zA-Z\s]/i.test(event.key)" placeholder="Enter Location"></td>
+            <td class="td1"><input type="text" id="dist" name="dist" onkeypress="return /[0-9]/i.test(event.key)" placeholder="Enter Distance from above"></td>
+            <td class="td1"><input id="sub" type="submit" value="" name=""></td>
+        </table>
+    </form>
 </div>
+</div>
+<h2 style="color:red;text-align:center;"><?php print_r( $msg) ?></h2>
 <?php  include "footer.php";?>

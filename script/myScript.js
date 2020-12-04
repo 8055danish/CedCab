@@ -15,8 +15,8 @@ function checkCarType()
         $("#weight-div").hide();
     }
     else{
-     $("#weight-div").show();
- }    
+       $("#weight-div").show();
+   }    
 }
 
 function validate(){
@@ -57,24 +57,24 @@ function validate(){
         url:"./ajax/ajax1.php",
         data:{p:pickup,d:drop,c:carType,w:weight},
         success: function(response) {
-            if (confirm("Confirmation! Total price is: "+response)) { 
-               $.ajax({     
+            if (confirm("Total price is: "+response+"\nDo you want to book Cab ?")) { 
+             $.ajax({     
                 type:"POST",
                 url:"./ajax/ajax2.php",
                 success: function(response) {
                     alert(response);
                 }
             });
-           } 
-           else {
+         } 
+         else {
 
-              console.log('Not confirm');
-          }
+          console.log('Not confirm');
       }
-  });
+  }
+});
 }
 function myRide(){
-   $.ajax({     
+ $.ajax({     
     type:"POST",
     url:"./ajax/ajax2.php",
     success: function(response) {
@@ -120,6 +120,18 @@ function approvedRide(id){
     });
 
 }
+function deleteUser(id){
+    if(confirm("Are You Sure ?")){
+      $.ajax({
+        type:"POST",
+        url:"../ajax/ajax8.php",
+        data:{id:id},
+        success: function(response){
+            location.reload();
+        }
+    });
+  }
+}
 
 function cancelledRide(id){
     $.ajax({
@@ -133,14 +145,28 @@ function cancelledRide(id){
 
 }
 function deleteRide(id){
-   $.ajax({
-    type:"POST",
-    url:"../ajax/ajax4.php",
-    data:{id:id},
-    success: function(response){
-        location.reload();
-    }
-});
+    if (confirm("Are You Sure!")) {
+     $.ajax({
+        type:"POST",
+        url:"../ajax/ajax4.php",
+        data:{id:id},
+        success: function(response){
+         location.reload();
+     }
+ });
+ }
+}
+function deleteMyRide(id){
+    if (confirm("Are You Sure!")) {
+     $.ajax({
+        type:"POST",
+        url:"./ajax/ajax9.php",
+        data:{id:id},
+        success: function(response){
+         location.reload();
+     }
+ });
+ }
 }
 function addLoc(){
     $("#form1").css("display","block");
@@ -157,8 +183,8 @@ function editLoc(id,name,dist){
     
 }
 function deleteLoc(id){
-   if (confirm("Are You Sure!")) {
-       $.ajax({
+ if (confirm("Are You Sure!")) {
+     $.ajax({
         type:"POST",
         url:"../ajax/ajax5.php",
         data:{id:id},
@@ -166,8 +192,17 @@ function deleteLoc(id){
             location.reload();
         }
     });
-   }
+ }
 }
-function invoice(ride_id,user_id){
-    alert(user_id);
+function buloc(id,s){
+    if (confirm("Are You Sure!")) {
+        $.ajax({
+            type:"POST",
+            url:"../ajax/ajax7.php",
+            data:{id:id,s:s},
+            success: function(response){
+                location.reload();
+            }
+        });
+    }
 }

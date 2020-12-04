@@ -18,7 +18,6 @@
  				<option selected="selected" disabled="disabled">Block</option>
  				<option value="1">Unblock</option>
  			</select><br>
- 			
  		<?php endforeach; ?>
  		<?php else:echo "<div class='align'>No Records Found !!!</div>" ?>
  		<?php endif;?>
