@@ -1,7 +1,6 @@
 body{ font-family: Century; background: rgb(51,51,51); padding:20px;}
 ul {
   list-style-type: none;
-  
   overflow: hidden;
   background-color:rgb(220,20,60);
   border-radius: 20px;

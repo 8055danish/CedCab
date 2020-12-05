@@ -3,8 +3,8 @@ include 'class/classes.php';
 include 'class/conn.php';
 $msg="";
 if(isset($_POST['submit'])){
-  $user_name =$_POST['username'];
-  $name =$_POST['name'];
+  $user_name =trim($_POST['username']," ");
+  $name =trim($_POST['name']," ");
   $mobile =$_POST['mobile'];
   $password =$_POST['password'];
   $cpassword =$_POST['cpassword'];

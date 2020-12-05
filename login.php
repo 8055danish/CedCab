@@ -4,7 +4,7 @@ include 'class/classes.php';
 include 'class/conn.php';
 $msg="";
 if(isset($_POST['submit'])){
-  $username = $_POST['username'];
+  $username = trim($_POST['username']," ");
   $password = $_POST['password'];
   $database = new Database();
   $db = $database->getConnection();

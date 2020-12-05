@@ -41,8 +41,8 @@ foreach ($totalLocation as $key4=>$value4) {
 ?>
 <?php require "header.php" ?>
 <style>
-	 body{ color: white; } .pagina{ width:100%; height:auto; } .linha{ width:100%; height:auto; display:table;}
-	.tile{ height:200px; width:200px; float:left; margin:25px 5px 0 0; padding:2px;border-radius: 18px; } .tileLargo{ width:320px; }
+	 body{ color: white; } .pagina{ width:100%; height:auto;margin-left:20px;margin-right:20px; } .linha{ width:100%; height:auto; display:table;}
+	.tile{ height:200px; width:200px; float:left; margin:25px 5px 0 0; padding:2px;border-radius: 18px; } .tileLargo{ width:280px; }
 	.amarelo{ background:#DAA520; } .vermelho{ background:#CD0000; } .azul{ background:#4682B4; } .verde{ background-color: #2E8B57; }
 	a:link {text-decoration: none;}a{
 		color:white;

@@ -6,19 +6,18 @@ $db = $database->getConnection();
 $location = new location();
 $msg="";
 if(isset($_POST['add'])){
-    $name = $_POST['name'];
-    $dist = $_POST['dist'];
+    $name = trim($_POST['name']," ");
+    $dist = trim($_POST['dist']," ") ;
     $msg=$location->addLoc($name,$dist,$db);
     $_POST['add']='';
 }
 if(isset($_POST['update'])){
     $id = $_POST['id'];
-    $name = $_POST['name'];
-    $dist = $_POST['dist'];
+    $name = trim($_POST['name']," ");
+    $dist = trim($_POST['dist']," ");
     $msg = $location->updateLoc($id,$name,$dist,$db);
     $_POST['update']='';
 }
-
 ?>
 <?php
 $tl = $location->totalLocation($db); 
@@ -33,7 +32,7 @@ $tl = $location->totalLocation($db);
 <div class="wrapper">
     <div>
         <div style="float:right">
-            <button style="background-color:yellow" onclick="addLoc()">Add Location</button>
+            <input style="background-color:yellow" type="button" value="Add Location" onclick="addLoc()">
         </div>
     </div>
     <table>
@@ -75,5 +74,5 @@ $tl = $location->totalLocation($db);
     </form>
 </div>
 </div>
-<h2 style="color:red;text-align:center;"><?php print_r( $msg) ?></h2>
+<h2 style="color:red;text-align:center;"><?php print_r( $msg);$msg=""; ?></h2>
 <?php  include "footer.php";?>
