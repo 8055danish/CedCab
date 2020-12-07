@@ -117,7 +117,7 @@ class admin{
 		return $users;
 	}
 	function isNotBlockUser($db){
-		$user_query = "SELECT `user_id`,`user_name`,`isblock` FROM `tbl_user` WHERE `isblock`='1'";
+		$user_query = "SELECT `user_id`,`user_name`,`isblock` FROM `tbl_user` WHERE `isblock`='1' AND `user_name` !='admin'";
 		$stmt = $db->prepare($user_query);
 		$stmt->execute();
 		$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
