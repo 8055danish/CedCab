@@ -10,7 +10,7 @@ if(isset($_POST['sort'])){
 $database = new Database();
 $db = $database->getConnection();
 $ride = new ride();
-$rides = $ride->userAllRide($id,$s,$db); 
+$rides = $ride->userAllRide($id,$s,$db);
 $tp=0;
 foreach ($rides as $key=>$value) {
 	$tp +=$value['total_fare'];
@@ -33,7 +33,7 @@ foreach ($rides as $key=>$value) {
 							<td><?php echo $value['from']?></td>
 							<td><?php echo $value['to']?></td>
 							<td><?php echo $value['total_fare']?></td>
-							<td><input type="button" value="Delete Ride" onclick=" deleteMyRide(<?php echo $value['ride_id']?>)"></td>
+							<td><input type="button" value="Invoice" data-toggle="modal" data-target="#myModal-<?php echo $value['ride_id']; ?>"></td>
 						</tr>
 					<?php endforeach; ?>
 					<?php else:echo "<div class='align'>No Records Found !!!</div>" ?>
@@ -54,4 +54,34 @@ foreach ($rides as $key=>$value) {
 			</div>
 		</div>
 	</div>
+		<?php foreach ($rides as $key=>$value): ?>
+		<!-- The Modal -->
+		<div class="modal fade" id="myModal-<?php echo $value['ride_id']; ?>">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Token Id: <?php echo $value['ride_id'];?></h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body" style="background-color: #333;color:white">
+						<h5 style="float:right">Date :<?php echo $value['ride_date'];?></h5>
+						<h5>User Name :<?php echo $value['user_name'];?></h5>
+
+						<h5>Total Distnace :<?php echo $value['total_distance']; ?></h5>
+						<h5><?php echo "From ".$value['from']." To ".$value['to']; ?></h5>
+						<h5>Total Luggage :<?php if($value['luggage'])echo $value['luggage'];else echo "0"?>KG</h5>
+						<h5>Total fare :Rs.<?php echo $value['total_fare'];?></h5>
+					</div>
+
+					<!-- Modal footer -->
+      <!--   <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div> -->
+
+  </div>
+</div>
+</div>
+<?php endforeach; ?>
 	<?php include "footer.php"; ?>

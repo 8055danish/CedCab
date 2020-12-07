@@ -487,12 +487,10 @@ class ride{
 				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				return $rides;
 			}
-
-
 		}
 		function userAllRide($id,$s,$db){
 			if($s==""){
-				$query = "SELECT * FROM `tbl_ride` WHERE `customer_user_id`=".$id;
+				$query= "SELECT * FROM tbl_user LEFT JOIN tbl_ride ON tbl_user.user_id = tbl_ride.customer_user_id WHERE tbl_user.user_id = '".$id."' UNION SELECT * FROM tbl_user RIGHT JOIN tbl_ride ON tbl_user.user_id = tbl_ride.customer_user_id WHERE tbl_user.user_id ='".$id."'";
 				$stmt = $db->prepare($query);
 				$stmt->execute();
 				$rides = $stmt->fetchAll(PDO::FETCH_ASSOC);
