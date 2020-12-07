@@ -3,7 +3,6 @@
 include 'class/classes.php';
 include 'class/conn.php';
 $msg= "";
-
 if(isset($_POST['submit'])){
 	$pass1 = $_POST['pass'];
 	$npass = $_POST['npass'];
@@ -13,7 +12,6 @@ if(isset($_POST['submit'])){
 	$pass = new user();
 	$msg = $pass->updatePass($pass1,$npass,$cpass,$db);
 }
-
 ?>
 <?php include 'header.php' ?>
 <style>

@@ -43,7 +43,7 @@ $tl = $location->totalLocation($db);
                 <th>Distance</th>
                 <th>ACTION1</th>
                 <th>ACTION2</th>
-                <th>ACTION3</th>
+                
             </tr>
         </thead>
         <tbody style="color:red;">
@@ -57,7 +57,7 @@ $tl = $location->totalLocation($db);
                 ?>
                 <td> <input type="button" value="<?php if($value['is_available']==0)echo "Enable";else echo "Disable"; ?>" onclick="buloc(<?php echo $value['id'].",".$value['is_available']?>)"></td></td>
                 <td><input type="button" value="Edit Loc." onclick="editLoc(<?php echo "'".$value['id']."','".$value['name']."','".$value['distance']."'";?>)"></td>
-                <td><input type="button" value="Delete Loc."  onclick="deleteLoc(<?php echo $value['id']?>)"></td>
+               <!--  <td><input type="button" value="Delete Loc."  onclick="deleteLoc(<?php echo $value['id']?>)"></td> -->
             </tr>
         <?php endforeach; ?>
     </tbody>
