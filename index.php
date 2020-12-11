@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+  <?php session_start(); ?>
 <?php if(isset($_SESSION['alogin'])){
   unset($_SESSION['alogin']);
 }
@@ -76,7 +76,7 @@ $tl = $location->locationShow($db);
                 <div class="input-group-prepend">
                     <span class="input-group-text"><small>Luggage</small></span>
                 </div>
-                <input type="number" onkeypress="return /[0-9]/i.test(event.key)" id="weight" class="form-control input-bg" placeholder="Enter Weight in KG">
+                <input type="number" onkeypress="return /[0-9]/i.test(event.key)" id="weight" class="lugwt form-control input-bg" placeholder="Enter Weight in KG">
             </div>
             <button onclick="validate(<?php if(isset($_SESSION['total_price']))echo '0';else echo '1';?>)" class="btn"><b>Calculate Total Price</b></button>
         </div>
@@ -115,5 +115,10 @@ let spantyped = new Typed("#head", {
   cursorChar: "",
 });
 
+</script>
+<script type="text/javascript">
+  $('.lugwt').on("cut copy paste drag drop",function(e) {
+e.preventDefault();
+});
 </script>
 <?php include "footer.php"; ?>

@@ -52,5 +52,4 @@ border-collapse: none;
 }?></h2>
 	</div>
 </div>
-
 <?php include 'footer.php' ?>

@@ -18,26 +18,32 @@ if(isset($_POST['submit'])){
 border:none;
 border-collapse: none;
 }
+
 </style>
 <div class="wrapper">
-  <h1 class="align">Universal Login</h1>
+  <h1 class="align">User Login</h1>
   <form name="form1" action="" method="post" novalidate>
     <table class="center">
      <tr>
        <td>Username </td>
-       <td><input name="username" type="text" required="" placeholder="Enter Username"></td>
+       <td><input name="username" class="lugwt" type="text" required="" placeholder="Enter Username"></td>
      </tr>
      <tr>
        <td>Password </td>
-       <td><input name="password" type="password" required="" placeholder="Enter Password"></td>
+       <td><input name="password" class="lugwt" type="password" required="" placeholder="Enter Password"></td>
      </tr>
      <tr><td></td><td> <input type="checkbox" id="check" name="check" value="check"> Remember Me</td></tr>
      <tr>
-      <td></td>
+      <td>&nbsp;</td>
       <td><input name="submit" type="submit" value="Login"></td>
     </tr>
   </table>
 </form>
 <div><h2 style="color:red;text-align:center;"><?php echo $msg ?></h2></div>
 </div>
+<script type="text/javascript">
+  $('.lugwt').on("cut copy paste drag drop",function(e) {
+e.preventDefault();
+});
+</script>
 <?php require "footer.php" ?>

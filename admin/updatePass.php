@@ -10,7 +10,7 @@ if(isset($_POST['submit'])){
 	$database = new Database();
 	$db = $database->getConnection();
 	$pass = new user();
-	$msg = $pass->updatePass($pass1,$npass,$cpass,$db);
+	$msg = $pass->updatePass1($pass1,$npass,$cpass,$db);
 }
 
 ?>
@@ -46,5 +46,4 @@ if(isset($_POST['submit'])){
 		<h2 style="color:red;text-align:center;"><?php print_r( $msg) ?></h2>
 	</div>
 </div>
-
 <?php include 'footer.php' ?>

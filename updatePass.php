@@ -45,5 +45,4 @@ border-collapse: none;
 		<h2 style="color:red;text-align:center;"><?php print_r( $msg) ?></h2>
 	</div>
 </div>
-
 <?php include 'footer.php' ?>

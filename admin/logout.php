@@ -7,5 +7,5 @@ if(isset($_COOKIE['username']) and isset($_COOKIE['password'])){
 	setcookie('username',$username,time()-1);
 	setcookie('password',$password,time()-1);
 }
-header("Location: login.php");
+header("Location: ../login.php");
 ?>

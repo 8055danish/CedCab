@@ -8,17 +8,9 @@ class user{
 		$user_check_query = "SELECT * FROM `tbl_user` WHERE `user_name` LIKE '%".$user_name."%' AND `password`='$password' LIMIT 1";
 		$stmt = $db->prepare($user_check_query);
 		$stmt->execute();
-		$user = $stmt->fetch(PDO::FETCH_ASSOC);
-		if(strcasecmp($user['user_name'],$user_name)=="0" and $user['password']==$password && $user['is_admin']=='1') {
-			$_SESSION['alogin']="true";
-			$_SESSION['user_id'] = $user['user_id'];
-			header("location:admin");
-		}
-		else if(strcasecmp($user['user_name'],$user_name)=="0" and $user['password']==$password && $user['isblock']=='0') {
-			$_SESSION['login'] = "false";
-			return "Wait for admin to aprrove";
-		}
-		else if(strcasecmp($user['user_name'],$user_name)=="0" and $user['password']==$password && $user['isblock']=='1') {
+		return $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		if(strcasecmp($user['user_name'],$user_name)=="0" and $user['password']==$password && $user['isblock']=='1') {
 			if(isset($_POST['check'])){
 				setcookie('username',$user_name,time()+60*60*7);
 				setcookie('password',$password,time()+60*60*7);
@@ -91,7 +83,33 @@ class user{
     		$query1 = "UPDATE `tbl_user` SET `password`='".md5($cpass)."'";
     		$stmt1 = $db->prepare($query1);
     		$stmt1->execute();
-    		return "Password Updated Successfully";
+    		header("location:logout.php");
+    	}
+    	else{
+    		return "Incorrect Current Password";
+    	}
+    }
+    function updatePass1($pass1,$npass,$cpass,$db){
+    	if($pass1==""||$npass==""||$cpass==""){
+    		return "All Field must be filled";
+    	}
+    	
+    	else if($pass1==$npass or $pass1==$cpass){
+    		return "New Password Should not be same";
+    	}
+    	else if($npass!=$cpass){
+    		return "New Password and Confirm Password Should be same";
+    	}
+    	$query = "SELECT * FROM `tbl_user` WHERE user_id='20'";
+    	$stmt = $db->prepare($query);
+    	$stmt->execute();
+    	$user = $stmt->fetch(PDO::FETCH_ASSOC);
+    	$pass1 = md5($pass1);
+    	if($user['password']==$pass1){
+    		$query1 = "UPDATE `tbl_user` SET `password`='".md5($cpass)."'";
+    		$stmt1 = $db->prepare($query1);
+    		$stmt1->execute();
+    		header("location:../admin/logout.php");
     	}
     	else{
     		return "Incorrect Current Password";

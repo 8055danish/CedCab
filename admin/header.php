@@ -21,7 +21,7 @@ if(!isset($_SESSION['alogin'])){
 <body>
 	<header>
 		<ul>
-			<li><a><img src="../image/cab.png" style="width:40px;height:25px" alt="image missing.."></a></li>
+			<li><a href="index.php"><span style="color:white;">Ced </span><span style="color:black;">Cab</span></a></li>
 			<li><a href="index.php">Home</a></li>
 			<li class="dropdown1">
 				<a href="javascript:void(0)" class="dropbtn1">Rides&#x21B4;</a>
@@ -56,3 +56,4 @@ if(!isset($_SESSION['alogin'])){
 			<li><a href="../logout.php">Logout</a></li>
 		</ul>
 	</header>
+	<hr>

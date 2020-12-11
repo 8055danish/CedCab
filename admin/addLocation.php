@@ -32,7 +32,7 @@ $tl = $location->totalLocation($db);
 <div class="wrapper">
     <div>
         <div style="float:right">
-            <input style="background-color:yellow" type="button" value="Add Location" onclick="addLoc()">
+            <input class="btn btn-primary" type="button" value="Add Location" onclick="addLoc()">
         </div>
     </div>
     <table>
@@ -67,12 +67,17 @@ $tl = $location->totalLocation($db);
     <form  id="form1" method="POST" action="" style="display:none">
         <table class="table1">
             <input type="hidden" id="id" name="id">
-            <td class="td1"><input type="text" id="name" name="name"  onkeypress="return /[a-zA-Z\s]/i.test(event.key)" placeholder="Enter Location"></td>
-            <td class="td1"><input type="text" id="dist" name="dist" onkeypress="return /[0-9]/i.test(event.key)" placeholder="Enter Distance from above"></td>
+            <td class="td1"><input type="text" class="lugwt" id="name" name="name"  onkeypress="return /[a-zA-Z\s]/i.test(event.key)" placeholder="Enter Location"></td>
+            <td class="td1"><input type="text" class="lugwt" id="dist" name="dist" onkeypress="return /[0-9]/i.test(event.key)" placeholder="Enter Distance from above"></td>
             <td class="td1"><input id="sub" type="submit" value="" name=""></td>
         </table>
     </form>
 </div>
 </div>
 <h2 style="color:red;text-align:center;"><?php print_r( $msg);$msg=""; ?></h2>
+<script type="text/javascript">
+  $('.lugwt').on("cut copy paste drag drop",function(e) {
+e.preventDefault();
+});
+</script>
 <?php  include "footer.php";?>
